@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+
+<head>
+	<title>WebSocket Mobile Controler</title>
+	<style>
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+	}
+	body {
+		font: 13px Helvetica, Arial;
+	}
+	
+	#messages {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+	}
+	#messages li {
+		padding: 5px 10px;
+	}
+
+	.cons{
+		position:absolute;
+		margin: auto;
+		width:600px;
+		height: 200px;
+		top: 0; 
+		left: 0; 
+		bottom: 0;
+		right: 0;
+		-webkit-perspective: 800px;
+	}
+
+	.rect{
+		width: 600px;
+		height: 200px;
+		background-color: #555;
+
+		position: absolute;
+		top:0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+
+		margin: auto;
+
+	
+		
+	}
+	</style>
+</head>
+
+<body>
+	<ul id="messages"></ul>
+
+	<div class="cons">
+		<div class="rect"></div>
+	</div>
+
+
+
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+
+	<script>
+	var rect = $('.rect');
+	var socket = io();
+
+	socket.on('socketmessage', function(rotZ, rotY, rotX) {
+		// console.log(rotZ, roxY, rotX);
+		rect.css('-webkit-transform','rotateX('+rotY+'deg) rotateY('+rotZ+'deg) rotateZ('+rotX+'deg)');
+	});
+
+
+	if ("ontouchstart" in document.documentElement) {
+		window.addEventListener("deviceorientation", function(event) {
+			var rotZ = event.alpha;
+			var rotY = event.gamma+90;
+			var rotX = event.beta;
+
+			socket.emit('socketmessage', rotZ,rotY,rotX);
+        	return false;
+
+			// socket.emit('chat message', rotZ, roxY, rotX);
+			 // rect.css('-webkit-transform','rotateX('+rotZ+') rotateY('+roxY+') rotateZ('+rotX+')');
+
+
+		}, false);
+	}
+
+	</script>
+
+</body>
+
+</html>
