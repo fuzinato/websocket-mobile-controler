@@ -1,6 +1,6 @@
-# WebSocket mMbile Controler
+# WebSocket mobile Controler
 
-Exercise with socket.io connection - controling things on desktop with mobile device.  
+  
 
 Kinda like a second screen. Idea was to make steering wheel out of users mobile device, by controling movement on large screen by tilting mobile device. 
 
